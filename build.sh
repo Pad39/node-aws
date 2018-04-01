@@ -18,15 +18,15 @@ do
 
   # Build using docker file
   echo "  building docker image ..."
-  exec "docker build -t $base_tag -f $docker_filename"
+  docker build -t $base_tag -f $docker_filename .
 
   # Push to Docker Hub
   for variant in "${variants[@]}"
   do
     tag_v="pad39/node-aws:$variant"
     echo "tagging and pushing for tag: $tag_v"
-    exec "docker tag $base_tag $tag_v"
-    exec "docker push $tag_v"
+    docker tag $base_tag $tag_v
+    docker push $tag_v
   done
     
 done <<< "$(cat versions | sed -E 's/,/ /g')"
