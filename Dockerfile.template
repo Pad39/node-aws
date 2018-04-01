@@ -1,0 +1,15 @@
+FROM node:##NODE_VERSION##
+RUN apt-get -y -qq update && \
+    apt-get -y -qq install libpython-dev python-dev zip jq && \
+    apt-get clean
+
+RUN curl -O https://bootstrap.pypa.io/get-pip.py
+
+RUN python get-pip.py
+
+RUN pip install --upgrade pip && \
+    pip install awscli awsebcli --upgrade
+
+RUN rm get-pip.py
+
+CMD [ "node" ]
